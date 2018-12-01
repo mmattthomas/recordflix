@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @track.title %>
+</p>
+
+<p>
+  <strong>link:</strong>
+  <%= raw @track.embed_html %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @track.description %>
+</p>
+
+<p>
+  <strong>Likes:</strong>
+  <%= @track.likes %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @track.comments %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @track.url %>
+</p>
+
+<p>
+  <strong>Posted by:</strong>
+  <%= @track.posted_by %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <%= @track.team %>
+</p>
+
+<%= link_to 'Edit', edit_track_path(@track) %> |
+<%= link_to 'Back', tracks_path %>

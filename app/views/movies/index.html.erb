@@ -1,0 +1,38 @@
+<div><h1><%= image_tag '/assets/kentflix_logo_sm.png', :style => "align:left" %> &nbsp;Movies</h1></div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th class="hidden-xs">Description</th>
+        <th class="hidden-xs" width="100px">Rating</th>
+        <th>Borrower</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr>
+          <td><b><%= link_to movie.title, movie %></b></td>
+          <td class="hidden-xs"><i><%= raw movie.description %></i></td>
+          <td class="hidden-xs">
+          <% if !movie.rating.nil? %>  
+            <% for i in 0...movie.rating do %>
+              <i class="fa fa-star" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
+          </td>
+          <% if movie.override_checkout.nil? || movie.override_checkout == "" %>
+          <td class="tags"><%= movie.checked_out_to.nil? ? link_to("Available!", movie, :class=>"success") : link_to(movie.checked_out_to.name, movie, :class=>"warning") %></td>          
+          <% else %>
+          <td class="tags"><%= link_to(movie.override_checkout, movie, :class=>"warning") %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</table>
+<br>
+<% if @current_user.admin %>
+<%= link_to 'New Movie', new_movie_path, :class => 'btn btn-primary' %>
+<% end %>

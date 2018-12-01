@@ -1,0 +1,65 @@
+<%= form_with(model: movie, local: true) do |form| %>
+  <% if movie.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+
+      <ul>
+      <% movie.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="panel panel-default devise-bs">
+    <div class="panel-heading">
+      <h4>
+        <%= form.label :title %>
+      </h4>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <%= form.label :title %>
+        <%= form.text_field :title, id: :movie_title, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :description %>
+        <%= form.text_area :description, id: :movie_description, rows:4, class: 'form-control'  %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :rating %>
+        <%= form.number_field :rating, id: :movie_rating, class: 'form-control'  %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :runtime %>
+        <%= form.number_field :runtime, id: :movie_runtime, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :released %>
+        <%= form.date_field :released, id: :movie_released, class: 'form-control'  %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :url %>
+        <%= form.text_field :url, id: :movie_url, class: 'form-control'  %>
+      </div>
+      <% if @checkout_users.nil? %>
+        <p> Checkout Users is nil - why!?! </p>
+      <% else %>
+        <div class="form-group">
+          <%= form.label :checed_out_to %> &nbsp; <i>Who currently has this movie checked out</i>        
+          <%= form.select :checked_out_to_id, options_for_select(@checkout_users.map{ |s| [s.name, s.id] }, @movie.checked_out_to_id), :include_blank => true, :id => 'checked_out_to_id' %>
+        </div>
+      <% end %>
+      <div class="form-group">
+        <%= form.label :override_checkout %> &nbsp; <i>To indicate checkout to someone not in the system (will override dropdown above)</i>        
+        <%= form.text_field :override_checkout, id: :movie_override_checkout, class: 'form-control'  %>
+      </div>
+
+
+  <div class="actions" >
+    <%= form.submit :class => 'btn btn-primary' %>
+  </div>
+<% end %>

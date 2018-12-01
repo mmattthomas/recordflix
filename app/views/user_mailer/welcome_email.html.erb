@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Welcome to Recordpool, <%= @user.name %>!</h3>
+    <p>
+      You have successfully signed up to Recordpool,
+      your username is: <%= @user.email %>.<br>
+      <% if !@user.phone_number.nil? %>
+        You provided a phone number: <%= @user.phone_number %>.  Great!  
+        You can text links to tracks to (224) 504-1267, and the system will post the link for you.
+      <% end %>
+    </p>
+    <p>
+      To login to the site, just follow this link: <%= @url %>.
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+    <p>-Matt</p>
+  </body>
+</html>

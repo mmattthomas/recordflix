@@ -1,0 +1,40 @@
+<div><h1>Tracks</h1></div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Title</th>
+        <th class="hidden-xs" width="100px">Rating</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tracks.each do |track| %>
+        <tr>
+          <td>
+            <%= image_tag track.thumbnail, size: "50x50" unless track.thumbnail.nil? %>
+          </td>
+          <td><b><%= link_to track.title, track.url %></b></td>
+          <td class="hidden-xs">
+          <% if !track.likes.nil? %>  
+            <% if track.likes > 5 %>
+              <i class="fa fa-heart" aria-hidden="true"></i> <%= track.likes %>
+            <% else %>
+              <% for i in 0...track.likes do %>
+                <i class="fa fa-heart" aria-hidden="true"></i>
+              <% end %>
+            <% end %>
+          <% end %>
+          </td>       
+          <td class="tags"><%= link_to("Edit", track, :class=>"info") %></td>          
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</table>
+<br>
+<% if @current_user.admin %>
+<%= link_to 'Post a Track', new_track_path, :class => 'btn btn-primary' %>
+<% end %>

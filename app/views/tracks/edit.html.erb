@@ -1,0 +1,7 @@
+<h1>Editing Track</h1>
+
+<%= render 'form', track: @track %>
+
+<%= link_to 'Show', @track, :class => 'btn btn-default' %>  
+<%= link_to 'Back', tracks_path, :class => 'btn btn-default'%> 
+<%= link_to 'DELETE', track_path(@track), :method => :delete, data: { confirm: "Are you ABSOLUTELY sure you want to delete this track (and comments)?" }, :class => 'btn btn-danger' %>

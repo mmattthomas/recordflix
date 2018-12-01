@@ -1,0 +1,24 @@
+<%= form_with(model: comment, local: true) do |form| %>
+  <% if comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :movie_id %>
+  <%= form.hidden_field :user_id %>
+  <div class="input-group">
+    <%= form.text_area :body, id: :comment_body, :class => "form-control input-sm chat-input", size: "60x3", :placeholder => "Comment about this movie..." %>
+  </div>
+  <br/>
+  <div class="input-group-btn">
+    <%= form.submit :class => "btn btn-primary btn-sm" %>
+  </div>
+<% end %>
+

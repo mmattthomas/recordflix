@@ -1,0 +1,8 @@
+<h1>Editing Movie</h1>
+
+<%= render 'form', movie: @movie %>
+
+<%= link_to 'Show', @movie, :class => 'btn btn-default' %> 
+<%= link_to 'Back to List', movies_path, :class => 'btn btn-default' %>
+<%= link_to 'DELETE', movie_path(@movie), :method => :delete, data: { confirm: "Are you ABSOLUTELY sure you want to delete this move (and comments)?" }, :class => 'btn btn-danger' %>
+

@@ -1,0 +1,84 @@
+<div class="panel panel-default devise-bs">
+  <div class="panel-heading">
+    <h4>
+      <%= link_to @movie.title, @movie.url %>
+    </h4>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <p>
+        <strong>Description:</strong>
+        <%= raw @movie.description %>
+      </p>
+    </div>
+    <div class="form-group">
+      <p>
+        <strong>Rating:</strong>
+        <% if !@movie.rating.nil? %>  
+          <% for i in 0...@movie.rating do %>
+            <i class="fa fa-star" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+      </p>
+    </div>
+    <div class="form-group">
+      <p>
+        <strong>Runtime:</strong>
+        <%= @movie.runtime %> minutes.
+      </p>
+    </div>      
+    <div class="form-group">
+      <p>
+        <strong>Released:</strong>
+        <%= @movie.released %>
+      </p>
+    </div>            
+    <div class="form-group">
+      <p>
+        <% if @movie_checkout_status == "Available!" %>
+          <%= button_to "Check Out!", { :controller => "movies", :action => "checkout"}, class: 'btn btn-primary' %>
+        <% elsif @movie_checkout_status == "You currently have this movie" %>
+          <%= button_to "Return Movie", { :controller => "movies", :action => "checkin"}, class: 'btn btn-primary' %>
+        <% else %>
+          <strong>
+            <%= @movie_checkout_status %>
+          </strong>
+          <br/>
+          <i>Coming soon: add yourself to waiting list</i>
+        <% end %>
+        <br/>
+        <% if @current_user.admin %>
+          <%= link_to 'Edit', edit_movie_path(@movie), :class => 'btn btn-default' %> 
+        <% end %>
+        <%= link_to 'Back to list', movies_path, :class => 'btn btn-default' %> 
+      </p>
+    </div>               
+  </div>
+</div>
+
+<div class="col-md-10 col-sm-10">
+  <% @comments.each do |comment| %>
+  <div class="panel panel-default arrow left">
+    <div class="panel-body">
+      <header class="text-left">
+        <strong class="pull-left primary-font"><i class="fa fa-user"></i> &nbsp; <%= comment.get_create_user %></strong>
+        <small class="pull-right text-muted">
+           <span class="fa fa-clock-o"></span><%= comment.created_at.to_formatted_s(:short) %></small>
+        </br>
+      </header>
+      <div class="comment-post">
+        <p>
+          <%= comment.body %>
+        </p>
+      </div>
+      <% if @current_user.name == comment.get_create_user %>
+        <p class="text-right"><%= link_to raw('<i class="fa fa-trash"></i> Delete'), comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-default btn-sm" %></p>
+      <% end %>
+    </div>  
+  </div>
+  <% end %>
+  <%= render partial: 'comments/form', locals: { comment: @comment } %>
+</div>
+<br/>
+
+

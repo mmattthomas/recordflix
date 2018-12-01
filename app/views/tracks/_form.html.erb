@@ -1,0 +1,59 @@
+<%= form_with(model: track, local: true) do |form| %>
+  <% if track.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(track.errors.count, "error") %> prohibited this track from being saved:</h2>
+
+      <ul>
+      <% track.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="panel panel-default devise-bs">
+  <div class="panel-heading">
+    <h4>
+      <%= form.label :title %>
+    </h4>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <%= form.label :url %>
+      <%= form.text_field :url, id: :track_url, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= form.label :title %>
+      <%= form.text_field :title, id: :track_title, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= form.label :description %>
+      <%= form.text_field :description, id: :track_description, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :likes %>
+      <%= form.number_field :likes, id: :track_likes, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :comments %>
+      <%= form.number_field :comments, id: :track_comments, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :posted_by_id %>
+      <%= form.select :posted_by_id, options_for_select(User.all.map{|s|[s.name, s.id]}), {}, {class: 'form-control'} %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :team_id %>
+      <%= form.select :team_id, options_for_select(Team.all.map{|s|[s.name, s.id]}), {}, {class: 'form-control'} %>
+    </div>
+
+    <div class="actions" >
+      <%= form.submit :class => 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<% end %>

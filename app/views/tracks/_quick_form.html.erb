@@ -1,0 +1,31 @@
+<%= form_with(model: track, local: true) do |form| %>
+  <% if track.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(track.errors.count, "error") %> prohibited this track from being saved:</h2>
+      <ul>
+        <% track.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="card gedf-card">
+    <div class="card-header">
+      Post a Track
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <%= form.hidden_field :title %>
+        <%= form.hidden_field :posted_by_id %>
+        <%= form.hidden_field :team_id %>
+        <label class="sr-only" for="message">post</label>
+        <%= form.text_field :url, id: :track_url, class: 'form-control', placeholder: "Link" %>
+        <%= form.text_area :description, id: :track_description, class: 'form-control', placeholder: "Track Description (optional)" %>
+      </div>
+      <div class="btn-toolbar justify-content-between">
+        <div class="btn-group pull-right">
+          <%= form.submit "Add Track!", :class => 'btn btn-primary ' %>
+        </div>
+      </div>
+    </div>
+<% end %>
