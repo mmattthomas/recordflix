@@ -21,6 +21,10 @@ class MessagesController < ApplicationController
 
     user = User.where(["phone_number = ?", from_number]).first # by phone number
 
+    if user.nil?
+      puts "DID NOT FIND USER"
+    end
+
     puts "FROM NUMBER CONVERTED TO : #{from_number}"
     puts "USER : #{user.name}"
 
@@ -35,15 +39,15 @@ class MessagesController < ApplicationController
     puts "URL found: #{url}"
 
     track.url = url      # need to trim out URL from everything else
-
-    resource = OEmbed::Providers.get(track.url)
+    puts "about to do oembed"
+    resource = OEmbed::Providers.get(url)
+    puts "did oembed"
     if !resource.title.empty?
       track.embed_html = resource.html.html_safe
       track.thumbnail =resource.thumbnail_url
-      if track.title.empty?
-        track.title = resource.title
-      end
+      track.title = resource.title
     end
+    puts "done setting about to save"
 
     if track.save
       # response text?... no
