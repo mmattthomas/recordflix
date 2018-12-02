@@ -19,7 +19,7 @@ class MessagesController < ApplicationController
       from_number[0] = ''
     end
 
-    user = User.where(["phone_number = ?", phone_number]).first # by phone number
+    user = User.where(["phone_number = ?", from_number]).first # by phone number
 
     puts "FROM NUMBER CONVERTED TO : #{from_number}"
     puts "USER : #{user.name}"
