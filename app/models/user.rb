@@ -6,7 +6,7 @@ class User < ApplicationRecord
   belongs_to :team, optional:true
   has_many :track_likes, dependent: :destroy
 
-  before_save :update_avatar
+  before_save :update_avatar, :update_phone
 
   after_create :send_welcome_mail
 
@@ -17,6 +17,20 @@ class User < ApplicationRecord
   def self.for_team(team_id)
     where("team_id = ?", team_id)
   end
+
+  def update_phone
+    pn = self.phone_number
+    pn.remove!("+");
+    pn.remove!(" ");
+    pn.remove!("-");
+    pn.remove!("(");
+    pn.remove!(")");
+    if pn.start_with?("1")
+      pn[0] = ''
+    end
+    self.phone_number = pn
+  end
+
 
   def update_avatar
     if self.avatar_url.nil?

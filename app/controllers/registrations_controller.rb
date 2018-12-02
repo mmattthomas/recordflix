@@ -6,7 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
     puts "working?"
     @user = User.new
     if (signup_team = params['signup_team']).present?
-      puts "into it! with #{signup_team}"      
+      #puts "into it! with #{signup_team}"      
       @user.team_name = signup_team
     end
     @resource = @user
@@ -18,6 +18,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
+
     super do |resource|
       handle_team(resource)
       set_flash_message :notice, :signed_up, :username => resource.name, :teamname => resource.team_name if is_flashing_format?
@@ -32,7 +33,9 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def update
+
     super do |resource|
+
       if resource.admin
         team = Team.find(resource.team.id)
         team.name = resource.team_name
@@ -41,6 +44,8 @@ class RegistrationsController < Devise::RegistrationsController
         team.save!
       end
     end
+
+    
   end
   
   protected

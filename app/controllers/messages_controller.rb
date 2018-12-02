@@ -12,8 +12,16 @@ class MessagesController < ApplicationController
     track = Track.new(track_params)
 
     # trim phone number
+    from_number.remove!("+");
+    from_number.remove!(" ");
+    from_number.remove!("-");
+    from_number.remove!("(");
+    from_number.remove!(")");
+    if from_number.start_with?("1")
+      from_number[0] = ''
+    end
 
-    user = User.find() # by phone number
+    user = User.where(["phone_number = ?", phone_number]).first # by phone number
 
     track.posted_by_id = user.id
     track.team_id = user.team_id
@@ -29,7 +37,7 @@ class MessagesController < ApplicationController
     end
 
     if track.save
-      # response text?
+      # response text?... no
     else
       # log error?
     end 
