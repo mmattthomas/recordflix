@@ -14,6 +14,8 @@ class User < ApplicationRecord
   attribute :team_short_name, :string
   attribute :team_checkout_limit, :integer
 
+  scope :for_team_id, lambda {|query| where(["team_id = ?", "#{query.to_i}"])}
+
   def self.for_team(team_id)
     where("team_id = ?", team_id)
   end

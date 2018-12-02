@@ -24,10 +24,13 @@ class TracksController < ApplicationController
     @track = Track.new
     @track.posted_by_id = current_user.id
     @track.team_id = current_user.team_id
+    @available_users = User.for_team_id(current_user.team_id)
   end
 
   # GET /tracks/1/edit
   def edit
+    @available_users = User.for_team_id(current_user.team_id)
+
   end
 
   # POST /tracks
