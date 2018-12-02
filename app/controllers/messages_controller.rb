@@ -9,8 +9,6 @@ class MessagesController < ApplicationController
     puts "FROM: #{from_number}"
     puts message_body
 
-    track = Track.new(track_params)
-
     # trim phone number
     from_number.remove!("+");
     from_number.remove!(" ");
@@ -23,9 +21,20 @@ class MessagesController < ApplicationController
 
     user = User.where(["phone_number = ?", phone_number]).first # by phone number
 
+    puts "FROM NUMBER CONVERTED TO : #{from_number}"
+    puts "USER : #{user.name}"
+
+    # build new track
+    track = Track.new
     track.posted_by_id = user.id
     track.team_id = user.team_id
-    track.url = message_body      # need to trim out URL from everything else
+
+    urls = message_body.scan(/(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/)
+    url = urls[0][0]
+
+    puts "URL found: #{url}"
+
+    track.url = url      # need to trim out URL from everything else
 
     resource = OEmbed::Providers.get(track.url)
     if !resource.title.empty?
@@ -38,7 +47,9 @@ class MessagesController < ApplicationController
 
     if track.save
       # response text?... no
+      puts "TRACK SAVED"
     else
+      puts "TRACK NOT SAVED..wth"
       # log error?
     end 
 
