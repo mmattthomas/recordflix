@@ -43,7 +43,7 @@
 
       <div class="form-group">
         <%= form.label :posted_by_id %>
-        <%= form.select :posted_by_id, options_for_select(@available_users.map{|s|[s.name, s.id]}), {}, {class: 'form-control'} %>
+        <%= form.select :posted_by_id, options_for_select(@available_users.map{|s|[s.name, s.id]}, @track.posted_by_id), {}, {class: 'form-control'} %>
       </div>
     <% end %>
     <% if current_user.email == "citytank@gmail.com" %>

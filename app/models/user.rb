@@ -13,6 +13,7 @@ class User < ApplicationRecord
   attribute :team_name, :string
   attribute :team_short_name, :string
   attribute :team_checkout_limit, :integer
+  attribute :invite_code, :string           #invite code for signing up
 
   scope :for_team_id, lambda {|query| where(["team_id = ?", "#{query.to_i}"])}
 

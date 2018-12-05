@@ -17,15 +17,18 @@ At the moment, this is a clone of Kentflix in order to make a music social media
  - [X] add likes
  - [X] style likes
  - [ ] 
+ - [X] edit team on separate page, generate invite code automatically, restrict team edit capabilities
+ - [ ] email invites...(or just generate invite link text to copy/paste)
  - [ ] connect comments to posts
  - [ ] style listing page better for likes/comments/date/posted-by information ... card format
  - [ ] better front page
- - [ ] V1 ... add to github, add to herokku
+ - [X] V1 ... add to github, add to herokku
  - [X] get mail working (sendgrid api) for account setup with devise, etc.
- - [ ] twilio integration - inbound text messages to add.
+ - [X] twilio integration - inbound text messages to add.
  - [ ] better styling
  - [ ] view/sort/filter list of tracks
  - [ ] tagging
+ - [ ] better twilio - better parsing if link not alone
  
 
 
