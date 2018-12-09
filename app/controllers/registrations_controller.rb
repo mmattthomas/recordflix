@@ -30,12 +30,21 @@ class RegistrationsController < Devise::RegistrationsController
       end
     end
 
-    if !err_msg.empty?
+    puts ">>.>> Debug about to do signup block"
+    puts "error message : #{err_msg}"
+    if err_msg.empty?
+      puts ">>.>> err msg is not empty"
       if invite_code.empty? || !team.nil?   #if no invite code (aka creating a new team) OR team found (from invite code)
+        puts ">>.>> invite code is not empty (or team is not nill)"
         super do |resource|
+          puts ">>.>> super DID resource save part"
           handle_team(resource, team, team_name)
+          puts ">>.>> handle team done"
           if !resource.errors.any?
+            puts ">>.>> no errors?"
             set_flash_message :notice, :signed_up, :username => resource.name, :teamname => resource.team_name if is_flashing_format?
+          else  
+            puts ">>.>> There WERE ERRORS: #{resource.errors}"
           end
         end
       else 
@@ -46,7 +55,7 @@ class RegistrationsController < Devise::RegistrationsController
     
     if !err_msg.empty?
       flash[:warning] = err_msg
-      #redirect_to '/users/sign_up'
+      redirect_to '/users/sign_up'
     end
     
   end

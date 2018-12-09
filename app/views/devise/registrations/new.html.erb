@@ -2,6 +2,10 @@
 <div class="panel panel-default devise-bs">
   <div class="panel-heading">
     <h4><%= t('.sign_up', default: 'Sign up') %></h4>
+    Hey!  Welcome to recordpool!
+    This is where you sign up.  Please enter your name, email and a password below.
+    If someone gave you a signup link, keep the invite code that is supplied.  
+    If you are wanting to create your own team, remove the invite code and supply the name of the team you want to create.
   </div>
   <div class="panel-body">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { role: 'form' }) do |f| %>
@@ -18,8 +22,12 @@
         <%= f.label :phone_number %>  <i>(For sending in favorite tracks via SMS)</i>
         <%= f.text_field :phone_number, autofocus: true, class: 'form-control' %>
         <span>
-        To use from your mobile device, simply text the message to (224) 504-1267.
-        Messaging and data rates may apply.
+        <em>Why are we asking for your phone number?</em><br/>
+        This is completely optional.  But if you do supply your number, you can text links to us and we'll be able to post the link
+        under your name! 
+        To use from your mobile device, simply "Share" the link as an SMS/text message and send it to <code>(224) 504-1267</code>.
+        Messaging and data rates may apply.<br/>
+        HINT: Add this number to your contacts list for easy reference.
         <br/><br/>
         </span>
       </div>      
@@ -32,11 +40,16 @@
         <%= f.password_field :password_confirmation, class: 'form-control' %>
       </div>
       <div class="form-group">
-        <%= f.label "Join or Create" %>
+        <span id="fld_new_team">
+          <%= f.label "Create a NEW team" %>
+          <%= f.text_field :team_name, class: 'form-control', placeholder: "Enter team name to create your own team" %>
+        </span>
+        <br clear="all"/>
+        <span id="fld_join_team">
         <br/>
-        <%= f.text_field :invite_code, class: 'form-control', placeholder: "Provide invite code to join team" %>
-        <i>OR</i>
-        <%= f.text_field :team_name, class: 'form-control', placeholder: "Enter team name to create your own team" %>
+          <%= f.label :invite_code %>
+          <%= f.text_field :invite_code, class: 'form-control', placeholder: "Provide invite code to join team" %>
+        </span>        
       </div>
       <%= f.submit t('.sign_up', default: 'Sign up'), class: 'btn btn-primary' %>
     <% end %>
