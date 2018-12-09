@@ -46,10 +46,11 @@
     <% end %>
     <% if current_user.admin %>
       <div class="actions" >
-        <%= form.submit "Save", :class => 'btn btn-primary' %>
+        <%= form.submit "Save", :class => 'btn btn-primary' %> &nbsp;
+        <%= link_to t('.back', default: 'Back'), :back, class: 'btn btn-default' %>
       </div>
     <% end %>
-    <%= link_to t('.back', default: 'Back'), :back, class: 'btn btn-default' %>
+    
     
   </div>
 </div>
