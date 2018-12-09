@@ -2,9 +2,11 @@
 <p></p>
 <% @tracks.each do |track| %>
     <div class="panel panel-white post panel-shadow">
-        <div class="post-description">             
-            <%= image_tag track.thumbnail, style: 'height:125px;width:auto;float:left;padding:0 15px;' unless track.thumbnail.nil? %>
-            <h4><%= link_to track.title, track.url %></h4>
+        <div class="post-description">          
+            <%= link_to track.url, target: :_blank do %>
+                <%= image_tag(track.thumbnail, style: 'height:125px;width:auto;float:left;padding:0 15px;', alt: "image") unless track.thumbnail.nil? %>     
+            <% end %>              
+            <h4><%= link_to track.title, track.url, target: :_blank %></h4>
             <p><%= track.description %></p>
             <br clear="left"/>
         </div>
