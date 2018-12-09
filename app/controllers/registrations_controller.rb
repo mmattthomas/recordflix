@@ -1,6 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
   #before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :sign_up_params, only: [:create]
+  skip_before_action :verify_authenticity_token, :only => :create
 
   def new
     @user = User.new
@@ -15,8 +16,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    # before doing super/devise new user... validate invite code (or blank invite + teamname)
-    err_msg = ""
 
     invite_code = params[:user][:invite_code]
     invite_code.upcase!
@@ -24,38 +23,13 @@ class RegistrationsController < Devise::RegistrationsController
       team = Team.where("invite_code = '#{invite_code}'").first
     else
       team_name = params[:user][:team_name]
-      if team_name.empty? && invite_code.empty?
-        puts "team name and invite code are empty - failed to join"
-        err_msg = "You must provide a team name or invite code to join."        
-      end
     end
 
-    puts ">>.>> Debug about to do signup block"
-    puts "error message : #{err_msg}"
-    if err_msg.empty?
-      puts ">>.>> err msg is not empty"
-      if invite_code.empty? || !team.nil?   #if no invite code (aka creating a new team) OR team found (from invite code)
-        puts ">>.>> invite code is not empty (or team is not nill)"
-        super do |resource|
-          puts ">>.>> super DID resource save part"
-          handle_team(resource, team, team_name)
-          puts ">>.>> handle team done"
-          if !resource.errors.any?
-            puts ">>.>> no errors?"
-            set_flash_message :notice, :signed_up, :username => resource.name, :teamname => resource.team_name if is_flashing_format?
-          else  
-            puts ">>.>> There WERE ERRORS: #{resource.errors}"
-          end
-        end
-      else 
-        #set_flash_message :notice, :invalid_invite_code if is_flashing_format?
-        err_msg = "The invite code you provided was invalid."      
+    super do |resource|
+      if resource.errors.empty?
+        handle_team(resource, team, team_name)
+        set_flash_message :notice, :signed_up, :username => resource.name, :teamname => resource.team_name if is_flashing_format?
       end
-    end 
-    
-    if !err_msg.empty?
-      flash[:warning] = err_msg
-      redirect_to '/users/sign_up'
     end
     
   end
@@ -146,4 +120,5 @@ class RegistrationsController < Devise::RegistrationsController
     #... maybe don't permit team?
     params.require(:user).permit(:name, :team, :team_name, :team_short_name, :team_checkout_limit, :email, :password, :password_confirmation, :current_password, :phone_number, :avatar_url)
   end
+
 end

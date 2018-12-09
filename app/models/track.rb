@@ -4,7 +4,7 @@ class Track < ApplicationRecord
   belongs_to :team
 
   has_many :track_likes, dependent: :destroy
-
+  validates :url, :presence => true
   scope :sorted, lambda { order("created_at DESC")}
   
 end

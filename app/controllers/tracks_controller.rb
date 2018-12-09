@@ -40,46 +40,31 @@ class TracksController < ApplicationController
 
     @track.posted_by_id = current_user.id
     @track.team_id = current_user.team_id
-
-    resource = OEmbed::Providers.get(@track.url)
-    if !resource.title.empty?
-      @track.embed_html = resource.html.html_safe
-      @track.thumbnail =resource.thumbnail_url
-      if @track.title.empty?
-        @track.title = resource.title
+    parser = @track.url
+    urls = parser.scan(/(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/)
+    @track.url = nil
+    if urls.length > 0
+      if urls[0].length > 0
+        @track.url = urls[0][0]
+        resource = OEmbed::Providers.get(@track.url)
+        if !resource.title.empty?
+          @track.embed_html = resource.html.html_safe
+          @track.thumbnail =resource.thumbnail_url
+          if @track.title.empty?
+            @track.title = resource.title
+          end
+        end
       end
     end
-    # if @track.url.include? ".youtube."
-    #   @youtube = OEmbed::Providers::Youtube.get(@track.url)
-    #   @track.embed_html = @youtube.html.html_safe
-    #   @track.thumbnail =@youtube.thumbnail_url
-    #   if @track.title.empty?
-    #     @track.title = @youtube.title
-    #   end
-    # end
-    # if @track.url.include? ".soundcloud."
-    #   @soudncloud = OEmbed::Providers::Soundcloud.get(@track.url)
-    #   @track.embed_html = @soudncloud.html.html_safe
-    #   @track.thumbnail =@soudncloud.thumbnail_url
-    #   if @track.title.empty?
-    #     @track.title = @soudncloud.title
-    #   end
-    # end    
-    # if @track.url.include? ".spotify."
-    #   @spotify = OEmbed::Providers::Spotify.get(@track.url)
-    #   @track.embed_html = @spotify.html.html_safe
-    #   @track.thumbnail =@spotify.thumbnail_url
-    #   if @track.title.empty?
-    #     @track.title = @spotify.title
-    #   end
-    # end
 
     respond_to do |format|
       if @track.save
         format.html { redirect_to tracks_url, notice: 'Your track was successfully added!' }
         format.json { render :show, status: :created, location: @track }
       else
-        format.html { render :new }
+        puts "save failed and #{@track.errors.first}"
+        #format.html { render :new }
+        format.html { redirect_to tracks_url, alert: "Sorry, I'm unable to understand that link" }
         format.json { render json: @track.errors, status: :unprocessable_entity }
       end
     end
@@ -119,4 +104,6 @@ class TracksController < ApplicationController
     def track_params
       params.require(:track).permit(:title, :description, :likes, :comments, :url, :posted_by_id, :team_id)
     end
+
+
 end
