@@ -20,23 +20,15 @@
                 </div>
                 <h6 class="text-muted time"><%= time_ago_in_words(track.created_at) %> ago</h6>
             </div>
-            <div class="stats pull-right">
-                <% if track.track_likes.where(user_id: @current_user.id).count > 0 %>
-                    <%= link_to "/tracks/#{track.id}/likes/#{track.track_likes.first.id}", method: :delete, class: "btn btn-default stat-item redheart" do %>
-                        <%= content_tag(:i, nil, class: ["fa fa-heart icon"]) %>
-                        <%= track.track_likes.count %>
+            <div class="stats pull-right">        
+                <span class="btn btn-default stat-item">
+                    <% if current_user.voted_up_on? track %>
+                        <%= link_to " ", unlike_track_path(track), class: 'vote fa fa-heart icon', method: :put, remote: true, data: { toggle_text: " ", toggle_href: like_track_path(track), id: track.id } %>
+                    <% else %>
+                        <%= link_to " ", like_track_path(track), class: 'vote fa fa-heart icon', method: :put, remote: true, data: { toggle_text: " ", toggle_href: unlike_track_path(track), id: track.id } %>
                     <% end %>
-                <% else %>
-                    <%= link_to track_likes_path(track), method: :post, class: "btn btn-default stat-item " do %>
-                        <%= content_tag(:i, nil, class: ["fa fa-heart icon"]) %>
-                        <%= track.track_likes.count %>
-                    <% end %>
-                <% end %>
-                <!--  
-                <a href="#" class="btn btn-default stat-item">
-                    <i class="fa fa-comment icon"></i>12
-                </a>
-                -->
+                    <span class='votes-count' data-id='<%= track.id %>'><%= track.get_likes.size %></span>
+                </span>            
                 <% if track.posted_by.id == @current_user.id %>
                     <%= link_to edit_track_path(track), class: "btn btn-default " do %>
                         <%= content_tag(:i, nil, class: ["fa fa-pencil icon"]) %>
@@ -49,3 +41,5 @@
         </div> 
     </div>
 <% end %>
+
+    

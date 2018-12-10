@@ -50,6 +50,9 @@ gem 'sendgrid-ruby'
 # for posting by SMS
 gem 'twilio-ruby'
 
+# for better likes:
+gem 'acts_as_votable', '~> 0.12.0'
+
 # required by bootstrap
 gem 'jquery-rails'
 

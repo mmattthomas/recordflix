@@ -38,3 +38,21 @@
 <% if @current_user.admin %>
 <%= link_to 'Post a Track', new_track_path, :class => 'btn btn-primary' %>
 <% end %>
+
+<!--  Snippet for formatting like buttons -->
+  <% if track.track_likes.where(user_id: @current_user.id).count > 0 %>
+          <%= link_to "/tracks/#{track.id}/likes/#{track.track_likes.first.id}", method: :put, class: "btn btn-default stat-item redheart" do %>
+              <%= content_tag(:i, nil, class: ["fa fa-heart icon"]) %>
+              <%= track.votes_for.size %>
+          <% end %>
+      <% else %>
+          <%= link_to track_likes_path(track), method: :post, class: "btn btn-default stat-item " do %>
+              <%= content_tag(:i, nil, class: ["fa fa-heart icon"]) %>
+              <%= track.votes_for.size %>
+          <% end %>
+      <% end %>
+      <!--  
+      <a href="#" class="btn btn-default stat-item">
+          <i class="fa fa-comment icon"></i>12
+      </a>
+      -->

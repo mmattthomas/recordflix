@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   
-  resources :tracks do 
-    resources :likes
-  end
+  resources :tracks #do 
+    #resources :likes
+  #end
+  put 'like/:id', to: 'tracks#like', as: :like_track
+  put 'unlike/:id', to: 'tracks#unlike', as: :unlike_track
+
 
   resource :messages do
     collection do

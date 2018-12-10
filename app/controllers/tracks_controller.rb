@@ -40,14 +40,21 @@ class TracksController < ApplicationController
 
     @track.posted_by_id = current_user.id
     @track.team_id = current_user.team_id
+    parseErr = ""
     parser = @track.url
     urls = parser.scan(/(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/)
     @track.url = nil
     if urls.length > 0
       if urls[0].length > 0
         @track.url = urls[0][0]
-        resource = OEmbed::Providers.get(@track.url)
-        if !resource.title.empty?
+        begin
+          resource = OEmbed::Providers.get(@track.url)
+        rescue OEmbed::NotFound
+          parseErr = "Sorry, I currently am not able to undertand/translate that link.  Hopefully I will in the future!"
+        rescue Exception
+          parseErr = "Error, I encountered an error handling this link"
+        end
+        if parseErr.empty? && !resource.title.empty?
           @track.embed_html = resource.html.html_safe
           @track.thumbnail =resource.thumbnail_url
           if @track.title.empty?
@@ -58,14 +65,17 @@ class TracksController < ApplicationController
     end
 
     respond_to do |format|
-      if @track.save
-        format.html { redirect_to tracks_url, notice: 'Your track was successfully added!' }
-        format.json { render :show, status: :created, location: @track }
-      else
-        puts "save failed and #{@track.errors.first}"
-        #format.html { render :new }
-        format.html { redirect_to tracks_url, alert: "Sorry, I'm unable to understand that link" }
+      if !parseErr.empty?
+        format.html { redirect_to tracks_url, alert: parseErr }
         format.json { render json: @track.errors, status: :unprocessable_entity }
+      else 
+        if @track.save
+          format.html { redirect_to tracks_url, notice: 'Your track was successfully added!' }
+          format.json { render :show, status: :created, location: @track }
+        else
+          format.html { redirect_to tracks_url, alert: "Sorry, I'm unable to understand that link" }
+          format.json { render json: @track.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -93,6 +103,34 @@ class TracksController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  #like/dislike
+  def like
+    @track = Track.find(params[:id])
+    @track.liked_by current_user
+  
+    if request.xhr?
+      #head :ok
+      #return count of likes for efficiency of ajax request
+      render json: { count: @track.get_likes.size, id: params[:id] }
+    else
+      redirect_to @track
+    end
+  end
+
+  def unlike
+    @track = Track.find(params[:id])
+    @track.unliked_by current_user
+  
+    if request.xhr?
+      #head :ok
+      #return count of likes for efficiency of ajax request
+      render json: { count: @track.get_likes.size, id: params[:id] }
+    else
+      redirect_to @track
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -18,7 +18,8 @@ At the moment, this is a clone of Kentflix in order to make a music social media
  - [X] style likes
  - [ ] 
  - [X] edit team on separate page, generate invite code automatically, restrict team edit capabilities
- - [ ] email invites...(or just generate invite link text to copy/paste)
+ - [X] email invites...(or just generate invite link text to copy/paste)
+ - [ ] FIXING ERRORS - error handling in devise controller for registrations.  Also invalid track post error
  - [ ] connect comments to posts
  - [ ] style listing page better for likes/comments/date/posted-by information ... card format
  - [ ] better front page
