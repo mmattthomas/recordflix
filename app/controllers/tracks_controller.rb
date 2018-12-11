@@ -109,9 +109,12 @@ class TracksController < ApplicationController
     @track = Track.find(params[:id])
     @track.liked_by current_user
   
+    puts ">>>.>>> ENTERED LIKE >>> "
+
     if request.xhr?
       #head :ok
       #return count of likes for efficiency of ajax request
+      puts ">>>.>>> ENTERED LIKE SUCCESS - LIKE COUNT IS:  #{@track.get_likes.size} >>> "
       render json: { count: @track.get_likes.size, id: params[:id] }
     else
       redirect_to @track
@@ -121,10 +124,13 @@ class TracksController < ApplicationController
   def unlike
     @track = Track.find(params[:id])
     @track.unliked_by current_user
+
+    puts ">>>.>>> ENTERED UNLIKE >>> "
   
     if request.xhr?
       #head :ok
       #return count of likes for efficiency of ajax request
+      puts ">>>.>>> ENTERED UNLIKE SUCCESS - LIKE COUNT IS:  #{@track.get_likes.size} >>> "
       render json: { count: @track.get_likes.size, id: params[:id] }
     else
       redirect_to @track

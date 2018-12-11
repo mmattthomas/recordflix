@@ -21,14 +21,13 @@
                 <h6 class="text-muted time"><%= time_ago_in_words(track.created_at) %> ago</h6>
             </div>
             <div class="stats pull-right">        
-                <span class="btn btn-default stat-item">
+                <a class="btn btn-default" data-js-like-link="true" data-js-liked-by-me="<%= current_user.voted_up_on?(track) ? 'true' : 'false' %>" data-js-id="<%= track.id %>">
                     <% if current_user.voted_up_on? track %>
-                        <%= link_to " ", unlike_track_path(track), class: 'vote fa fa-heart icon', method: :put, remote: true, data: { toggle_text: " ", toggle_href: like_track_path(track), id: track.id } %>
+                    <i class='fa fa-heart icon' style='color:red;'></i> &nbsp; <%= track.get_likes.size %>
                     <% else %>
-                        <%= link_to " ", like_track_path(track), class: 'vote fa fa-heart icon', method: :put, remote: true, data: { toggle_text: " ", toggle_href: unlike_track_path(track), id: track.id } %>
+                    <i class='fa fa-heart icon'></i> &nbsp; <%= track.get_likes.size %>
                     <% end %>
-                    <span class='votes-count' data-id='<%= track.id %>'><%= track.get_likes.size %></span>
-                </span>            
+                </a>
                 <% if track.posted_by.id == @current_user.id %>
                     <%= link_to edit_track_path(track), class: "btn btn-default " do %>
                         <%= content_tag(:i, nil, class: ["fa fa-pencil icon"]) %>

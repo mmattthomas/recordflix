@@ -56,3 +56,14 @@
           <i class="fa fa-comment icon"></i>12
       </a>
       -->
+
+
+      <!-- Last working (eh) version of like button before overhaul -->
+        <span class="btn btn-default stat-item">
+                    <% if current_user.voted_up_on? track %>
+                        <%= link_to " ", unlike_track_path(track), class: 'vote fa fa-heart icon', method: :put, remote: true, data: { toggle_text: " ", toggle_href: like_track_path(track), id: track.id } %>
+                    <% else %>
+                        <%= link_to " ", like_track_path(track), class: 'vote fa fa-heart icon', method: :put, remote: true, data: { toggle_text: " ", toggle_href: unlike_track_path(track), id: track.id } %>
+                    <% end %>
+                    <span class='votes-count' data-id='<%= track.id %>'><%= track.get_likes.size %></span>
+                </span>        
