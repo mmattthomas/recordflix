@@ -6,7 +6,7 @@ class TracksController < ApplicationController
   # GET /tracks.json
   def index
     @current_user = current_user
-    @tracks = Track.sorted
+    @tracks = Track.feed_for_team_id(current_user.team_id).sorted
 
     # for quick-post at the top:
     @track = Track.new

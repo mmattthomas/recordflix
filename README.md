@@ -15,17 +15,19 @@ At the moment, this is a clone of Kentflix in order to make a music social media
  - [X] get oEmbedd connected - first try youtube
  - [X] set post new track on listing form, simplify, pull in data from oEmbed
  - [X] add likes
- - [X] style likes
- - [ ] 
- - [X] edit team on separate page, generate invite code automatically, restrict team edit capabilities
- - [X] email invites...(or just generate invite link text to copy/paste)
- - [ ] FIXING ERRORS - error handling in devise controller for registrations.  Also invalid track post error
- - [ ] connect comments to posts
- - [ ] style listing page better for likes/comments/date/posted-by information ... card format
- - [ ] better front page
  - [X] V1 ... add to github, add to herokku
  - [X] get mail working (sendgrid api) for account setup with devise, etc.
  - [X] twilio integration - inbound text messages to add.
+ - [X] style likes
+ - [X] edit team on separate page, generate invite code automatically, restrict team edit capabilities
+ - [X] email invites...(or just generate invite link text to copy/paste)
+ - [X] ajax likes 
+ - [ ] account + team form - jquery to show/hide invite code team name properly
+ - [X] filter feed appropriately per team
+ - [ ] connect comments to posts
+ - [ ] allow for public/private posts?
+ - [ ] style listing page better for likes/comments/date/posted-by information ... card format
+ - [ ] better front page
  - [ ] better styling
  - [ ] view/sort/filter list of tracks
  - [ ] tagging

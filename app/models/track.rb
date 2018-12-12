@@ -9,4 +9,6 @@ class Track < ApplicationRecord
   validates :url, :presence => true
   scope :sorted, lambda { order("created_at DESC")}
   
+  scope :feed_for_team_id, lambda {|query| where(["team_id = ?", "#{query.to_i}"])}
+  
 end

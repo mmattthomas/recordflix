@@ -93,7 +93,8 @@ class RegistrationsController < Devise::RegistrationsController
         #new_team.name = new_user.team_name
         new_team.name = new_team_name
         #new_team.checkout_limit = 3
-        new_team.short_name = new_team.name.slice(0..2)
+        new_team.invite_code = (0...8).map { (65 + rand(26)).chr }.join
+        new_team.short_name = "#{new_team.name.slice(0..2)} Tracks"
         new_team.save!
 
         new_user.team_id = new_team.id

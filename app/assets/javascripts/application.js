@@ -17,3 +17,14 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+
+function showInviteCode(b){
+    if (b) {
+        document.getElementById('fld_join_team').style.display = 'none';
+        document.getElementById('fld_new_team').style.display = 'block';
+    } else 
+    {
+        document.getElementById('fld_new_team').style.display = 'none';
+        document.getElementById('fld_join_team').style.display = 'block';
+    }
+}

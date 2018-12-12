@@ -38,21 +38,44 @@
       <div class="form-group">
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>      
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <% if @user.invite_code.nil? %>
+          <label class="btn btn-secondary ">
+            <input type="radio" name="teamjoinoptions" id="opt-join" autocomplete="off" onchange="showInviteCode(false)">  Join a Team
+          </label>
+          <label class="btn btn-secondary active">
+            <input type="radio" name="teamjoinoptions" id="opt-new" autocomplete="off" onchange="showInviteCode(true)" checked > Create a new Team
+          </label>
+        <% else %>
+          <label class="btn btn-secondary active">
+            <input type="radio" name="teamjoinoptions" id="opt-join" autocomplete="off" onchange="showInviteCode(false)" checked>  Join a Team
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="teamjoinoptions" id="opt-new" autocomplete="off" onchange="showInviteCode(true)"> Create a new Team
+          </label>
+        <% end %>
       </div>
       <div class="form-group">
-        <span id="fld_new_team">
+        <span id="fld_new_team" style="<%= @user.invite_code.nil? ? "display:block;" : "display:none;" %>">
           <%= f.label "Create a NEW team" %>
           <%= f.text_field :team_name, class: 'form-control', placeholder: "Enter team name to create your own team" %>
-        </span>
-        <br clear="all"/>
-        <span id="fld_join_team">
-        <br/>
+        </span>        
+        <span id="fld_join_team" style="<%= @user.invite_code.nil? ? "display:none;" : "display:block;" %>">
           <%= f.label :invite_code %>
           <%= f.text_field :invite_code, class: 'form-control', placeholder: "Provide invite code to join team" %>
         </span>        
       </div>
-      <%= f.submit t('.sign_up', default: 'Sign up'), class: 'btn btn-primary' %>
+      <%= f.submit t('.sign_up', default: 'Sign up'), class: 'btn btn-primary' %> &nbsp;
+      <%= render 'devise/shared/links' %>
     <% end %>
   </div>
 </div>
-<%= render 'devise/shared/links' %>
+<br/>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <p></p>
+    <%= image_tag '/assets/mp2016afp.jpg', class: 'logoimage', style: "max-width:100%; max-height:100%;" %>
+    <p></p>
+  </div>
+</div>

@@ -19,8 +19,9 @@
           <% end %>
         </div>
       <% end %>
-      <%= f.submit  t('.sign_in', default: 'Sign in'), class: 'btn btn-primary' %>
+      <%= f.submit  t('.sign_in', default: 'Sign in'), class: 'btn btn-primary' %> &nbsp; 
+      <%= render 'devise/shared/links' %>
     <% end %>
   </div>
 </div>
-<%= render 'devise/shared/links' %>
+
