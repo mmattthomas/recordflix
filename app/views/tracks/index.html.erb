@@ -12,7 +12,11 @@
         </div>
         <div class="post-heading">
             <div class="pull-left image">                
+                <% if track.posted_by.avatar.attached? %>
+                <%= image_tag track.posted_by.avatar.variant(resize: "100x100!"), class: "img-circle avatar" %>
+                <% else %>
                 <%= image_tag track.posted_by.avatar_url, class: "img-circle avatar", alt: "user profile image"%>
+                <% end %>
             </div>
             <div class="pull-left meta">
                 <div class="title h5">
