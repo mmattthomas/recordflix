@@ -22,8 +22,12 @@ At the moment, this is a clone of Kentflix in order to make a music social media
  - [X] edit team on separate page, generate invite code automatically, restrict team edit capabilities
  - [X] email invites...(or just generate invite link text to copy/paste)
  - [X] ajax likes 
- - [ ] account + team form - jquery to show/hide invite code team name properly
+ - [X] account + team form - jquery to show/hide invite code team name properly
  - [X] filter feed appropriately per team
+ - [ ] allow avatar upload
+ - [ ] pagination
+ - [ ] dupe/error check on multiple invite codes
+ - [ ] parsing inbound email instead of twilio
  - [ ] connect comments to posts
  - [ ] allow for public/private posts?
  - [ ] style listing page better for likes/comments/date/posted-by information ... card format
@@ -32,6 +36,7 @@ At the moment, this is a clone of Kentflix in order to make a music social media
  - [ ] view/sort/filter list of tracks
  - [ ] tagging
  - [ ] better twilio - better parsing if link not alone
+ - [ ] upload own music/tracks
  
 
 
