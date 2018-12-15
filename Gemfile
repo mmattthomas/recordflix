@@ -41,6 +41,9 @@ gem 'jbuilder', '~> 2.5'
 # replaced by bootstrap-sass above
 # gem 'bootstrap', '~> 4.0.0.beta2.1'
 
+# for image manipulations
+gem "mini_magick"
+
 # bootstrap views for devise
 gem 'devise-bootstrap-views'
 

@@ -4,7 +4,25 @@
     <h4>Profile</h4>
   </div>
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <div class="panel-body">    
+    <div class="panel-body">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-4">
+            <%= f.label :avatar %>
+            <br/>
+            <% if resource.avatar.attached? %>
+              <%= image_tag resource.avatar.variant(resize: "100x100!"), class: "img-circle avatar" %>
+            <% else %>
+              <%= image_tag resource.avatar_url, class: "img-circle avatar", alt: "user profile image"%>
+            <% end %>
+            <br/><br/>
+            <%= f.file_field :avatar %>
+          </div>
+          <div class="col-sm-8">
+            
+          </div>
+        </div>
+      </div>
       <div class="form-group">
         <%= f.label :name %>
         <%= f.text_field :name, autofocus: true, class: 'form-control' %>
@@ -17,24 +35,23 @@
         <%= f.label :phone_number %>  <i>(For sending in favorite tracks via SMS)</i>
         <%= f.text_field :phone_number, autofocus: true, class: 'form-control' %>
         <span>
-        To use from your mobile device, simply "Share" the link as an SMS/text message and send it to <code>(224) 504-1267</code>.
-        Messaging and data rates may apply.<br/>
-        HINT: Add this number to your contacts list for easy reference.
-          <br/><br/>
+          To use from your mobile device, simply "Share" the link as an SMS/text message and send it to <code>(224) 504-1267</code>.
+          Messaging and data rates may apply.<br/>
+          HINT: Add this number to your contacts list for easy reference.
+          <br/>
+          <br/>
         </span>
-
         <div class="form-group">
           <div class="form-group">
             <%= f.label :team_name %>
             <%= f.text_field :team_name, readonly: true, class: 'form-control' %>
           </div>
-        <% if current_user.admin %>
+          <% if current_user.admin %>
             <div class="form-group">
               <%= link_to 'Edit Team', edit_team_path(resource.team), class: 'btn btn-default' %>
-            </div>    
+            </div>
           <% end %>
         </div>
-    
       </div>
       <div class="form-group">
         <%= f.label :password %> <i>(<%= t('.leave_blank_if_you_don_t_want_to_change_it', default: "leave blank if you don't want to change it") %>)</i>
@@ -44,30 +61,11 @@
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, class: 'form-control'  %>
       </div>
-      <!--
-
-      -->
-      <div class="form-group">
-        <div class="pull-left image">   &nbsp;
-         <%= image_tag resource.avatar_url, class: "img-circle avatar", alt: "user profile image"%> 
-        </div>
-        <span>
-        The ability to change your own avatar will be added in a future release.  For now, the system uses your <em>gravatar</em>
-        You can set your own gravatar to be associated with your email address at <%= link_to "en.gravatar.com", "http://en.gravatar.com"%> 
-        <br/><br/>
-      </div>
-    </div>
-    
-
-    <div class="panel-body">    
+      <div class="panel-body">
         <%= f.submit t('.update', default: 'Update'), class: 'btn btn-primary' %>  <%= link_to t('.back', default: 'Back'), :back, class: 'btn btn-default' %>
-        <br/><br/>
+        <br/>
+        <br/>
         <p>Want to <b>Leave forever</b>? (sniff!) <%= link_to t('.cancel_my_account', default: 'Cancel my account'), registration_path(resource_name), data: { confirm: t('.are_you_sure', default: "Are you sure?") }, method: :delete %>.</p>
-    </div>
-    
-  <% end %>    
-</div>
-
-
-
-
+      </div>
+    <% end %>
+  </div>

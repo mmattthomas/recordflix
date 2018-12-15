@@ -8,9 +8,9 @@ class User < ApplicationRecord
   
   belongs_to :team, optional:true
   has_many :track_likes, dependent: :destroy
+  has_one_attached :avatar
 
   before_save :update_avatar, :update_phone
-
   after_create :send_welcome_mail
 
   attribute :team_name, :string

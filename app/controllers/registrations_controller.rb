@@ -1,7 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
-  #before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :sign_up_params, only: [:create]
-  skip_before_action :verify_authenticity_token, :only => :create
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  # before_action :sign_up_params, only: [:create]
+  # skip_before_action :verify_authenticity_token, :only => :create
 
   def new
     @user = User.new
@@ -119,7 +119,14 @@ class RegistrationsController < Devise::RegistrationsController
 
   def account_update_params
     #... maybe don't permit team?
-    params.require(:user).permit(:name, :team, :team_name, :team_short_name, :team_checkout_limit, :email, :password, :password_confirmation, :current_password, :phone_number, :avatar_url)
+    params.require(:user).permit(:name, :team, :team_name, :team_short_name, :team_checkout_limit, :email, :password, :password_confirmation, :current_password, :phone_number, :avatar_url, :avatar)
+  end
+
+  def configure_permitted_parameters
+    puts ">>>>>.>>>>>INTO CONFIGURE PERMITTED PARAMETERES"
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :team_name, :invite_code, :phone_number, :avatar_url])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :avatar, :phone_number, :avatar_url])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :avatar, :phone_number, :avatar_url])
   end
 
 end
