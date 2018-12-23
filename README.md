@@ -24,7 +24,9 @@ At the moment, this is a clone of Kentflix in order to make a music social media
  - [X] ajax likes 
  - [X] account + team form - jquery to show/hide invite code team name properly
  - [X] filter feed appropriately per team
- - [ ] allow avatar upload
+ - [ ] switch to gorails starter template (?)
+ - [X] verify security on editing of trax - dont allow people to edit others's tracks
+ - [X] allow avatar upload (amazon S3)
  - [ ] pagination
  - [ ] dupe/error check on multiple invite codes
  - [ ] parsing inbound email instead of twilio
